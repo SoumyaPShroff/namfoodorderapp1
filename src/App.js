@@ -138,10 +138,20 @@ const Body = () => {
         <RestaurantCard resName = "KFC" cuisine="Burger, Fast Food"/>   
         {/*  dynamic data pass  = resobk - array of data to pass which include name,cusine etc */}
 
-        <RestaurantCard resData={resList[0]} />
+        {/* <RestaurantCard resData={resList[0]} />
         <RestaurantCard resData={resList[1]} />
         <RestaurantCard resData={resList[2]} />
-        <RestaurantCard resData={resList[3]} />
+        <RestaurantCard resData={resList[3]} /> */}
+        {
+          // for each restaurant in RestaurantCard we are looping and returning the card component diplay
+          //each loop should have key to make it unique hence pass (unique id ex: here we have id as key)
+          resList.map((restaurant) => (
+            <RestaurantCard key={restaurant.id} resData={restaurant} />
+          )
+          )
+
+        }
+
       </div>
     </div>
   );
