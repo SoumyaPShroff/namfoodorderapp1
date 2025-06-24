@@ -68,12 +68,8 @@ const Body = () => {
             // If searchText is empty, show all restaurants
             setFilteredResList(resList);
         } else {
-            // Filter restaurants by place
-           //"Bengaluru-Kormangala"
             const topRated = resList.filter(res => res.data.name === searchText);
-            console.log(resList, searchText);
             setFilteredResList(topRated);
-            console.log(topRated, "top rated");
         }
     }
 
