@@ -29,9 +29,9 @@ const RestaurantCard = ({ resData }) => {
       <h3>{resData.data.name}</h3>
       <h4>{resData.data.cuisine.join(", ")}</h4>
       <h4>{resData.data.deliverytime}</h4>
-      <h4>{resData.data.place}</h4>
-      <h4>{resData.data.rating} stars</h4>
-
+      <p>{resData.data.place}</p>
+      <h4>{resData.data.rating} stars</h4>  
+      {/* <span className="badge">⭐ {resData.rating}</span> */}
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import React from "react";
 import RestaurantCard from "./RestaurantCard";
-// import resList from "../utils/mockData";
 import { useState } from "react";
+import Search from "./Search";
+import "./RestaurantCard.css";
 
 const Body = () => {
 
@@ -62,23 +63,72 @@ const Body = () => {
     const [filteredResList, setFilteredResList] = useState(resList);
     const [searchText, setSearchText] = useState("");
 
-    const handleFilterTopRatedRes = () => {
-        if (!searchText.trim()) {
-            console.log(searchText, "empty");
-            // If searchText is empty, show all restaurants
+    // const handleFilterRes = () => {
+    //     if (!searchText.trim()) {
+    //         console.log(searchText, "empty");
+    //         // If searchText is empty, show all restaurants
+    //         setFilteredResList(resList);
+    //     } else {
+    //        // const searchRes= resList.filter(res => res.data.name === searchText);
+    //        const searchRes= resList.filter(res => res.data.name.toLowerCase().includes(searchText.toLowerCase()));
+    //         setFilteredResList(searchRes);
+    //     }
+    // }
+    const handleFilterRes = (searchstring) => {
+        if (!searchstring.trim()) {
+            // If search text is empty or just spaces, reset to full list
             setFilteredResList(resList);
         } else {
-            const topRated = resList.filter(res => res.data.name === searchText);
-            setFilteredResList(topRated);
+            const searchRes = resList.filter(res => res.data.name.toLowerCase().includes(searchstring.toLowerCase()));
+            setFilteredResList(searchRes);
         }
     }
+    
+    // Get unique places for the dropdown
+    //spread operator is used to create a new array with unique places
+    // Set is used to filter out duplicates - All is also included along with list of current items
+    const uniquePlaces = ["All", ...new Set(resList.map(res => res.data.place))];
+
+    // Filter handler
+    const handleFilterChange = (e) => {
+        const value = e.target.value;
+        setSearchText(value);
+        if (value === "All") {
+            setFilteredResList(resList);
+        } else {
+            const filtered = resList.filter(res => res.place === value);
+            setFilteredResList(resList);
+        }
+    };
 
     return (
         <div className="body">
-            <div className="filter-btn">
+            {/* <div className="filter-btn">
                 <input type="text" onChange={(e) => setSearchText(e.target.value)} />
-                <button className="filter-btn" onClick={handleFilterTopRatedRes}>Search Restaurants</button>
+                <button className="filter-btn" onClick={handleFilterRes}>Search Restaurants</button>
+            </div> */}
+            <div>
+                <br>
+                </br>
             </div>
+            <div style={{ marginBottom: "16px" }}>
+                <label>Filter by Place: </label>
+                <select value={searchText} onChange={handleFilterChange}>
+                    {uniquePlaces.map((place, idx) => (
+                        <option key={idx} value={place}>
+                            {place}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            <div>
+                <Search
+                    onSearch={handleFilterRes}
+                    placeholder="Search for restaurants..."
+                />
+            </div>
+
             <div className="res-container">
                 {
                     filteredResList.map((restaurant) => (
