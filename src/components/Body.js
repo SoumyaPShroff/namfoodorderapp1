@@ -26,7 +26,11 @@ const Body = () => {
     // Get unique places for the dropdown
     //spread operator is used to create a new array with unique places
     // Set is used to filter out duplicates - All is also included along with list of current items
+    //const resList = [{ type: "restaurant", data: { place: "Bengaluru", name: "Meghana Foods" }},{type: "restaurant", data: {   place: "Mumbai",  name: "KFC"  }  },
     const uniquePlaces = ["All", ...new Set(resList.map(res => res.data.place))];
+    //dropdown except as below
+    //[{ place: "All" }, { place: "Bengaluru" }, { place: "Hyderabad" }, ...]
+    const placesList = uniquePlaces.map(place => ({ place }));
 
     // Filter handler
     const handleFilterChange = (searchplace) => {
@@ -48,7 +52,7 @@ const Body = () => {
             <div style={{ marginBottom: "16px" }}>
                 <label>Filter by Place: </label>
                 <DropdownList
-                    data={uniquePlaces.map(place => ({ place }))}
+                    data={placesList}
                     labelKey="place"
                     valueKey="place"
                     onChange={(e) => handleFilterChange(e.target.value)}
