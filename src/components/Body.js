@@ -4,11 +4,14 @@ import { useState } from "react";
 import Search from "./Search";
 import "./RestaurantCard.css";
 import data from "../utils/Data.json"  //data taken from Data.json file
+import "./DropdownList.css"; // Importing CSS for dropdown
+import DropdownList from "./DropdownList";
 
 const Body = () => {
     const resList = data.restoList;
     const [filteredResList, setFilteredResList] = useState(resList);
     const [searchText, setSearchText] = useState("");
+    const [searchPlace, setsearchPlace] = useState("All");
 
     const handleFilterRes = (searchstring) => {
         if (!searchstring.trim()) {
@@ -27,10 +30,10 @@ const Body = () => {
 
     // Filter handler
     const handleFilterChange = (searchplace) => {
+        setsearchPlace(searchplace);
         if (searchplace === "All") {
             setFilteredResList(resList);
         } else {
-
             const filtered = resList.filter(res => res.data.place === searchplace);
             setFilteredResList(filtered);
         }
@@ -44,13 +47,15 @@ const Body = () => {
             </div>
             <div style={{ marginBottom: "16px" }}>
                 <label>Filter by Place: </label>
-                <select onChange={(e) => handleFilterChange(e.target.value)}>
-                    {uniquePlaces.map((place, idx) => (
-                        <option key={idx} value={place}>
-                            {place}
-                        </option>
-                    ))}
-                </select>
+                <DropdownList
+                    data={uniquePlaces.map(place => ({ place }))}
+                    labelKey="place"
+                    valueKey="place"
+                    onChange={(e) => handleFilterChange(e.target.value)}
+                    selectedValue={searchPlace}
+                    disabled={true}
+                />
+
             </div>
 
             <div>

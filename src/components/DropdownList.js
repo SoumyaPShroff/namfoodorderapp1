@@ -1,16 +1,13 @@
 import React from 'react'
+import "./DropdownList.css"; // Importing CSS for dropdown
 
-function DropdownList({ data = [], labelKey = "label", valueKey = "value", onChange, selectedValue, placeholder = "-- Select --" }, disabled = false) {
+function DropdownList({ data = [], labelKey, valueKey, onChange, selectedValue, placeholder = "-- Select --" }, disabled = false) {
 return (
-    <select
+    <select  className="dropdown"
       value={selectedValue}
       onChange={onChange}
       disabled={disabled}
-      className="dropdown"
     >
-      <option value="" disabled hidden>
-        {placeholder}
-      </option>
       {data.map((item, index) => (
         <option key={index} value={item[valueKey]}>
           {item[labelKey]}
